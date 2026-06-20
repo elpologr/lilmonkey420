@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K'eri Kua</title>
+    <title>Lil Monkey 420</title>
     <style>
         :root {
             --color-texto:       #111;
@@ -1850,7 +1850,7 @@
     <!-- Foto de perfil circular, justo debajo de la barra de redes sociales -->
     <div class="perfil-avatar-contenedor">
         <div class="perfil-avatar-marco">
-            <img src="imagenes/perfil.webp" alt="Foto de perfil de K'eri Kua" class="perfil-avatar-img" onerror="this.closest('.perfil-avatar-contenedor').style.display='none'">
+            <img src="imagenes/perfil.webp" alt="Foto de perfil de Lil Monkey 420" class="perfil-avatar-img" onerror="this.closest('.perfil-avatar-contenedor').style.display='none'">
         </div>
     </div>
 
@@ -1858,7 +1858,7 @@
 
         <!-- Banner victor-recuadro1 -->
         <div style="margin: 0 0 0 0; width:100%; overflow:hidden;">
-            <img src="imagenes/victor-recuadro1.webp" alt="K'eri Kua"
+            <img src="imagenes/victor-recuadro1.webp" alt="Lil Monkey 420"
                  style="width:100%; display:block; object-fit:cover;"
                  onerror="this.style.display='none'">
         </div>
@@ -1866,7 +1866,7 @@
         <!-- Wrapper relativo para poder anclar el botón al borde izquierdo real -->
         <div style="position:relative;">
 
-            <h1 class="seccion-titulo-bloque" style="margin-top:48px;">Conoce A K'eri Kua</h1>
+            <h1 class="seccion-titulo-bloque" style="margin-top:48px;">Conoce A Lil Monkey 420</h1>
 
             <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin:18px 0 40px 0;">
                 <button onclick="toggleBiografia()" id="btn-biografia" style="padding:20px 56px;border-radius:35px;border:3px solid #222;background:#222;color:#fff;font-size:20px;font-weight:700;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='#fe2c55';this.style.borderColor='#fe2c55'" onmouseout="this.style.background='#222';this.style.borderColor='#222'">Biografía</button>
@@ -1884,20 +1884,20 @@
             <!-- Texto biográfico -->
             <div style="padding: 0 20px;">
                 <p class="bio-parrafo">
-                    En K'eri Kua, nuestra misión es elevar la experiencia del cannabis a través de la educación y la selección curada de productos de la más alta calidad. Somos un equipo apasionado por el bienestar integral, dedicados a ofrecer un espacio seguro, informado y profesional donde la calidad es nuestra prioridad. Creemos en el poder de la naturaleza para mejorar tu día a día, brindándote asesoría personalizada en cada paso.
+                    <strong>Lil Monkey 420 – Más que una tabla, un estilo de vida.</strong><br><br>
+                    En Lil Monkey 420, no solo vendemos piezas de madera y ruedas; entendemos lo que significa rodar por el asfalto. Nacimos de la pasión pura por el skate, la cultura callejera y esa libertad inigualable que sientes cuando haces tu primer kickflip.
+                    <br><br>
+                    Sabemos que cada patinador tiene una historia diferente, por eso seleccionamos cada producto pensando en quienes no tienen miedo a caerse, pero siempre tienen hambre de levantarse. Ya sea que estés empezando a dominar el pavimento o seas un veterano de los spots locales, aquí encontrarás el equipo necesario para darle vida a tu estilo.
+                    <br><br>
+                    Rodamos juntos. Rodamos libre. Bienvenido a la comunidad.
                 </p>
             </div>
 
         </div>
         <div id="seccion-musica" style="display:none;">
-        <div class="filtro-plataformas-video" id="filtroPlataformasVideo">
-            <button type="button" class="btn-filtro-plataforma activo yt" id="btn-plat-youtube" onclick="filtrarPlataformaVideo('youtube')">YouTube</button>
-            <button type="button" class="btn-filtro-plataforma fb" id="btn-plat-facebook" onclick="filtrarPlataformaVideo('facebook')">Facebook</button>
-            <button type="button" class="btn-filtro-plataforma ig" id="btn-plat-instagram" onclick="filtrarPlataformaVideo('instagram')">Instagram</button>
-        </div>
-        <div class="grilla-productos" id="grilla">
+        <div class="grilla-productos" id="grilla" style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
 
-            <div class="sin-resultados" id="mensaje-vacio">Cargando videos…</div>
+            <div class="sin-resultados" id="mensaje-vacio">Cargando patinetas…</div>
 
         </div>
         </div><!-- /seccion-musica -->
@@ -2541,52 +2541,28 @@
             }
         }
 
-        async function cargarVideosDesdeSheet() {
+        async function cargarPatinetasDesdeSheet() {
             const msgVacio = document.getElementById('mensaje-vacio');
             try {
-                const resp = await fetch(SHEET_URL_VIDEOS + '&t=' + Date.now());
+                const resp = await fetch(SHEET_URL_ACCESORIOS + '&t=' + Date.now());
                 if (!resp.ok) throw new Error('No se pudo leer la hoja');
                 const texto = await resp.text();
                 const filas = parsearCSVVideos(texto);
-                // Una fila es válida si tiene al menos un link (YouTube, Facebook o Instagram),
-                // el Título es opcional — si falta, se intenta autocompletar más abajo.
-                const datos = filas.slice(1).filter(f =>
-                    (f[3] || '').trim() !== '' || (f[4] || '').trim() !== '' || (f[5] || '').trim() !== ''
-                );
+                const datos = filas.slice(1).filter(f => (f[0] || '').trim() !== '');
 
-                const videos = datos.map(f => ({
-                    titulo:      (f[0] || '').trim(),
-                    descripcion: (f[1] || '').trim(),
-                    fechaTexto:  (f[2] || '').trim(),
-                    fechaObj:    parsearFechaVideo(f[2]),
-                    youtube:     (f[3] || '').trim(),
-                    facebook:    (f[4] || '').trim(),
-                    instagram:   (f[5] || '').trim()
-                }));
+                const patinetas = datos
+                    .map(f => ({
+                        titulo: (f[0] || '').trim(),
+                        precio: (f[1] || '').trim(),
+                        imagen: (f[2] || '').trim()
+                    }))
+                    .filter(p => p.titulo.toLowerCase().includes('patineta'));
 
-                // Autocompletar el título de los videos que no traen uno en la hoja
-                await Promise.all(videos.map(async (v) => {
-                    if (v.titulo) return;
-                    const media = detectarMediaVideo(v.youtube, v.facebook, v.instagram);
-                    if (media && media.tipo === 'youtube' && media.youtubeId) {
-                        v.titulo = (await obtenerTituloYoutube(media.youtubeId)) || 'Video de K'eri Kua';
-                    } else if (media && media.tipo === 'facebook') {
-                        v.titulo = 'Video de Facebook';
-                    } else if (media && media.tipo === 'instagram') {
-                        v.titulo = 'Video de Instagram';
-                    } else {
-                        v.titulo = 'Video sin título';
-                    }
-                }));
-
-                // Más reciente primero
-                videos.sort((a, b) => b.fechaObj - a.fechaObj);
-
-                renderizarVideosSheet(videos);
+                renderizarPatinetasSheet(patinetas);
             } catch (err) {
-                console.error('No se pudieron cargar los videos desde Google Sheets:', err);
+                console.error('No se pudieron cargar las patinetas desde Google Sheets:', err);
                 if (msgVacio) {
-                    msgVacio.textContent = 'No se pudieron cargar los videos. Intenta de nuevo más tarde.';
+                    msgVacio.textContent = 'No se pudieron cargar las patinetas. Intenta de nuevo más tarde.';
                     msgVacio.style.display = 'block';
                 }
             }
@@ -2611,11 +2587,13 @@
                 // Se ignora la primera fila (encabezados) y se descartan filas sin título
                 const datos = filas.slice(1).filter(f => (f[0] || '').trim() !== '');
 
-                const accesorios = datos.map(f => ({
-                    titulo: (f[0] || '').trim(),
-                    precio: (f[1] || '').trim(),
-                    imagen: (f[2] || '').trim()
-                }));
+                const accesorios = datos
+                    .map(f => ({
+                        titulo: (f[0] || '').trim(),
+                        precio: (f[1] || '').trim(),
+                        imagen: (f[2] || '').trim()
+                    }))
+                    .filter(a => !a.titulo.toLowerCase().includes('patineta'));
 
                 renderizarAccesoriosSheet(accesorios);
             } catch (err) {
@@ -2653,56 +2631,28 @@
             });
         }
 
-        function renderizarVideosSheet(videos) {
+        function renderizarPatinetasSheet(patinetas) {
             const grilla   = document.getElementById('grilla');
             const msgVacio = document.getElementById('mensaje-vacio');
             if (!grilla) return;
 
             grilla.querySelectorAll('.producto-card').forEach(c => c.remove());
 
-            const validos = videos.filter(v => detectarMediaVideo(v.youtube, v.facebook, v.instagram));
-
-            if (!validos.length) {
-                if (msgVacio) { msgVacio.textContent = 'No hay videos disponibles por el momento.'; msgVacio.style.display = 'block'; }
+            if (!patinetas.length) {
+                if (msgVacio) { msgVacio.textContent = 'No hay patinetas disponibles por el momento.'; msgVacio.style.display = 'block'; }
                 if (typeof aplicarFiltros === 'function') aplicarFiltros();
                 return;
             }
             if (msgVacio) msgVacio.style.display = 'none';
 
-            validos.forEach((v, i) => {
-                const media = detectarMediaVideo(v.youtube, v.facebook, v.instagram);
-                const ytData  = v.youtube   ? construirEmbedYoutube(v.youtube)     : null;
-                const fbEmbed = v.facebook  ? construirEmbedFacebook(v.facebook)   : null;
-                const igEmbed = v.instagram ? construirEmbedInstagram(v.instagram) : null;
-
+            patinetas.forEach(p => {
                 const card = document.createElement('div');
                 card.className = 'producto-card';
-                card.id = 'video-sheet-' + (i + 1);
-                card.dataset.nombre      = v.titulo;
-                card.dataset.descripcion = v.descripcion;
-                card.dataset.mediaTipo   = media.tipo;
-                if (ytData)  { card.dataset.ytEmbed = ytData.embed; card.dataset.ytId = ytData.id; }
-                if (fbEmbed) { card.dataset.fbEmbed = fbEmbed; }
-                if (igEmbed) { card.dataset.igEmbed = igEmbed; }
-                card.onclick = function () { abrirFichaProducto(card); };
-
-                let miniatura;
-                if (media.tipo === 'youtube' && media.youtubeId) {
-                    miniatura = `<img class="producto-img" src="https://img.youtube.com/vi/${media.youtubeId}/hqdefault.jpg" alt="${escaparHTMLVideo(v.titulo)}" onerror="this.style.background='#111'">`;
-                } else if (media.tipo === 'facebook') {
-                    miniatura = `<div class="producto-img" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1877F2,#0d3f8f);color:#fff;font-size:42px;">▶</div>`;
-                } else {
-                    const igThumb = construirMiniaturaInstagram(v.instagram);
-                    miniatura = `<img class="producto-img" src="${igThumb}" alt="${escaparHTMLVideo(v.titulo)}" referrerpolicy="no-referrer" onerror="manejarErrorMiniaturaIG(this)">`;
-                }
-
+                card.style.width = '260px';
                 card.innerHTML = `
-                    ${miniatura}
-                    <div class="producto-info">
-                        <h3 class="producto-titulo">${escaparHTMLVideo(v.titulo)}</h3>
-                        <p class="producto-detalles">${escaparHTMLVideo(v.fechaTexto)}</p>
-                    </div>
-                    <div class="producto-card-hint">Toca para ver el video</div>
+                    <img class="producto-img" src="${escaparHTMLVideo(p.imagen)}" alt="${escaparHTMLVideo(p.titulo)}" loading="lazy" onerror="this.style.display='none'">
+                    <div class="producto-titulo">${escaparHTMLVideo(p.titulo)}</div>
+                    ${p.precio ? `<div class="producto-precio" style="font-weight:700;color:#fe2c55;padding:0 12px 12px;">$${escaparHTMLVideo(p.precio)}</div>` : ''}
                 `;
                 grilla.appendChild(card);
             });
@@ -2710,7 +2660,7 @@
             if (typeof aplicarFiltros === 'function') aplicarFiltros();
         }
 
-        window.addEventListener('DOMContentLoaded', cargarVideosDesdeSheet);
+        window.addEventListener('DOMContentLoaded', cargarPatinetasDesdeSheet);
 
         function onClickOverlayProducto(e) {
             if (e.target.id === 'modalProducto') {
@@ -2970,28 +2920,23 @@
 
         function aplicarFiltros() {
             paginaActual = 1;
-            // Solo operar sobre cards dentro de seccion-musica (no las de proyectos ni las ocultas)
+            // Solo operar sobre cards dentro de seccion-musica (Patinetas)
             const secMusica = document.getElementById('seccion-musica');
             const todas = Array.from(secMusica ? secMusica.querySelectorAll('.producto-card') : document.querySelectorAll('.producto-card'));
 
-            const claveDataset = filtroPlataformaVideo === 'youtube' ? 'ytEmbed'
-                                : filtroPlataformaVideo === 'facebook' ? 'fbEmbed'
-                                : 'igEmbed';
-
-            tarjetasFiltradas = todas.filter(p => !!p.dataset[claveDataset]);
-
-            todas.forEach(p => p.style.display = 'none');
-            tarjetasFiltradas.forEach(p => p.style.display = 'flex');
+            tarjetasFiltradas = todas;
 
             const msgVacio = document.getElementById('mensaje-vacio');
             if (msgVacio) {
-                if (todas.length && !tarjetasFiltradas.length) {
-                    msgVacio.textContent = 'No hay videos disponibles en esta plataforma.';
+                if (!todas.length) {
+                    msgVacio.textContent = 'No hay patinetas disponibles por el momento.';
                     msgVacio.style.display = 'block';
                 } else {
                     msgVacio.style.display = 'none';
                 }
             }
+
+            if (typeof renderizarPagina === 'function') renderizarPagina();
         }
 
         function filtrarPorNombre(valor) {
@@ -3154,7 +3099,7 @@
     <div class="modal-qr-overlay" id="modalQR">
         <div class="modal-qr-caja">
             <button class="modal-qr-cerrar" onclick="cerrarModalQR()">✕</button>
-            <div class="modal-qr-titulo">🎸 Comparte a K'eri Kua</div>
+            <div class="modal-qr-titulo">🛹 Comparte a Lil Monkey 420</div>
             <p class="modal-qr-sub">Escanea el código QR para abrir esta página</p>
             <div class="modal-qr-dominio-futuro">
                 🌐 Próximamente disponible en <strong>zismo.com</strong>
